@@ -230,7 +230,7 @@ const androidSourcesSrcPath = `${packagePath}/android/src/main/kotlin/` +
   `${packageCase(packageMap.githubUsername)}/${packageCase(packageMap.packageName)}`
 let packageIdentifierPath = packageIdentifier
 while(packageIdentifierPath.includes(".")) {
-  packageIdentifierPath.replace(".", "/")
+  packageIdentifierPath = packageIdentifierPath.replace(".", "/")
 }
 const androidSourcesResPath = `${packagePath}/android/src/main/kotlin/${packageIdentifierPath}`
 const iosSourcesPath = `${packagePath}/ios`
