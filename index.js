@@ -228,8 +228,11 @@ const copyOptions = (map) => ({
 const packagePath = `${process.cwd()}/${packageMap.packageName}`
 const androidSourcesSrcPath = `${packagePath}/android/src/main/kotlin/` +
   `${packageCase(packageMap.githubUsername)}/${packageCase(packageMap.packageName)}`
-const androidSourcesResPath = `${packagePath}/android/src/main/kotlin/` +
-  `${packageIdentifier.replace(/./g, '/')}`
+let packageIdentifierPath = packageIdentifier
+while(packageIdentifierPath.includes(".")) {
+  packageIdentifierPath.replace(".", "/")
+}
+const androidSourcesResPath = `${packagePath}/android/src/main/kotlin/${packageIdentifierPath}`
 const iosSourcesPath = `${packagePath}/ios`
 const typescriptSourcesPath = `${packagePath}/src`
 
@@ -258,10 +261,12 @@ const done = () => {
 const makePackage = async () => {
   await copy(`${__dirname}/template`, packagePath, copyOptions({ ...packageMap, ...miscMap }))
 
+  console.log('mappingComponentMaps: ', componentMaps)
   await Promise.all(componentMaps.map(async (map) => (
     copyTemplates('component-template', map, map.componentName)
   )))
 
+  console.log('mappingmoduleMaps: ', moduleMaps)
   await Promise.all(moduleMaps.map(async (map) => (
     copyTemplates('module-template', map, map.moduleName)
   )))
