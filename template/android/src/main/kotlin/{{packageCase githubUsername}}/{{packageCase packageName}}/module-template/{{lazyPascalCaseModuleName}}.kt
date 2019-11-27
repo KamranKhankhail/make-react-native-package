@@ -1,4 +1,4 @@
-package {{packageCase githubUsername}}.{{packageCase packageName}}.{{lazyPackageCaseModuleName}}
+package {{packageCase packageIdentifier}}
 
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule

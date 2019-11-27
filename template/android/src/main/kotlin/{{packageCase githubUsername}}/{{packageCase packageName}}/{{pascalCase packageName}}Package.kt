@@ -1,4 +1,4 @@
-package {{packageCase githubUsername}}.{{packageCase packageName}}
+package {{packageCase packageIdentifier}}
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
@@ -6,10 +6,10 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
 
 {{#each modules}}
-import {{packageCase ../githubUsername}}.{{packageCase ../packageName}}.{{packageCase this}}.{{pascalCase this}}
+import {{packageCase ../packageIdentifierPath}}.{{pascalCase this}}
 {{/each}}
 {{#each components}}
-import {{packageCase ../githubUsername}}.{{packageCase ../packageName}}.{{packageCase this}}.{{pascalCase this}}Manager
+import {{packageCase ../packageIdentifierPath}}.{{packageCase this}}.{{pascalCase this}}Manager
 {{/each}}
 
 class {{pascalCase packageName}}Package : ReactPackage {

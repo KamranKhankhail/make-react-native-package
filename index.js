@@ -189,6 +189,8 @@ const packageMap = {
 
 const componentMaps = packageMap.components.map((componentName) => ({ componentName }))
 const moduleMaps = packageMap.modules.map((moduleName) => ({ moduleName }))
+let packageIdentifierPath = packageIdentifier
+packageIdentifierPath.replace(/./g, "/");
 const miscMap = {
   package: 'package',
   gitignore: '.gitignore',
@@ -200,7 +202,8 @@ const miscMap = {
   lazyPackageCaseComponentName: '{{packageCase componentName}}',
   lazyPascalCaseModuleName: '{{pascalCase moduleName}}',
   lazyParamCaseModuleName: '{{paramCase moduleName}}',
-  lazyPackageCaseModuleName: '{{packageCase moduleName}}'
+  lazyPackageCaseModuleName: '{{packageCase moduleName}}',
+  packageIdPath: '{{packageCase packageIdentifierPath}}'
 }
 
 const transform = (map) => (data) => (
@@ -243,7 +246,7 @@ console.log(packageMap)
 const copyTemplates = async (src, map, name) => {
   const options = copyOptions(map)
 
-  await copy(`${androidSourcesSrcPath}/${src}`, `${androidSourcesResPath}/${packageCase(name)}`, options)
+  await copy(`${androidSourcesSrcPath}/${src}`, `${androidSourcesResPath}`, options)
 
   await copy(`${iosSourcesPath}/${src}`, `${iosSourcesPath}/${pascalCase(name)}`, options)
 

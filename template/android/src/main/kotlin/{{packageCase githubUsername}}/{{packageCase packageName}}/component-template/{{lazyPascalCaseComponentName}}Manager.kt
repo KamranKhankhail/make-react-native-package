@@ -1,4 +1,4 @@
-package {{packageCase githubUsername}}.{{packageCase packageName}}.{{lazyPackageCaseComponentName}}
+package {{packageCase packageIdentifier}}
 
 import android.graphics.Color
 import com.facebook.react.module.annotations.ReactModule
