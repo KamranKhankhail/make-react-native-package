@@ -226,8 +226,10 @@ const copyOptions = (map) => ({
 })
 
 const packagePath = `${process.cwd()}/${packageMap.packageName}`
-const androidSourcesPath = `${packagePath}/android/src/main/kotlin/` +
-  `${packageIdentifier.replace('.', '/')}`
+const androidSourcesSrcPath = `${packagePath}/android/src/main/kotlin/` +
+  `${packageCase(packageMap.githubUsername)}/${packageCase(packageMap.packageName)}`
+const androidSourcesResPath = `${packagePath}/android/src/main/kotlin/` +
+  `${packageIdentifier.replace(/./g, '/');}`
 const iosSourcesPath = `${packagePath}/ios`
 const typescriptSourcesPath = `${packagePath}/src`
 
@@ -238,7 +240,7 @@ console.log(packageMap)
 const copyTemplates = async (src, map, name) => {
   const options = copyOptions(map)
 
-  await copy(`${androidSourcesPath}/${src}`, `${androidSourcesPath}/${packageCase(name)}`, options)
+  await copy(`${androidSourcesSrcPath}/${src}`, `${androidSourcesResPath}/${packageCase(name)}`, options)
 
   await copy(`${iosSourcesPath}/${src}`, `${iosSourcesPath}/${pascalCase(name)}`, options)
 
