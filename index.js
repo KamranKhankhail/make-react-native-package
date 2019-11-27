@@ -229,7 +229,7 @@ const packagePath = `${process.cwd()}/${packageMap.packageName}`
 const androidSourcesSrcPath = `${packagePath}/android/src/main/kotlin/` +
   `${packageCase(packageMap.githubUsername)}/${packageCase(packageMap.packageName)}`
 const androidSourcesResPath = `${packagePath}/android/src/main/kotlin/` +
-  `${packageIdentifier.replace(/./g, '/');}`
+  `${packageIdentifier.replace(/./g, '/')}`
 const iosSourcesPath = `${packagePath}/ios`
 const typescriptSourcesPath = `${packagePath}/src`
 
