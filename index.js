@@ -28,7 +28,7 @@ const sections = [
   {
     header: 'Usage',
     content: '$ make-react-native-package <{bold --packageName} {underline name}> ' +
-      '<{bold --githubUsername} {underline user}> ...'
+      '<{bold --packageIdentifier} {underline com.mycool.app}> ...'
   },
   {
     header: 'Required options',
@@ -39,9 +39,9 @@ const sections = [
         description: 'The name of project folder, github repo and npm package.'
       },
       {
-        name: 'githubUsername',
-        alias: 'g',
-        description: 'Your github username.'
+        name: 'packageIdentifier',
+        alias: 'i',
+        description: 'Your android package name.'
       }
     ]
   },
@@ -111,6 +111,7 @@ const sections = [
       '$ make-react-native-package ' +
       '{bold --packageName} {underline react-native-cool-component}',
       '{hidden   }{bold --githubUsername} {underline octocat} ' +
+      '{hidden   }{bold --packageIdentifier} {underline com.mycool.app} ' +
       '{bold --appName} {underline CoolExample} ' +
       '{bold --objcPrefix} {underline RNCC}',
       '{hidden   }{bold --description} {underline "Cool description"} ' +
@@ -125,6 +126,7 @@ const usage = commandLineUsage(sections)
 const optionDefinitions = [
   { name: 'packageName', alias: 'p', type: String },
   { name: 'githubUsername', alias: 'g', type: String },
+  { name: 'packageIdentifier', alias: 'i', type: String },
   { name: 'appName', alias: 'a', type: String },
   { name: 'objcPrefix', alias: 'o', type: String },
   { name: 'components', alias: 'c', type: String, multiple: true },
@@ -140,6 +142,7 @@ const optionDefinitions = [
 const {
   packageName,
   githubUsername,
+  packageIdentifier,
   appName,
   objcPrefix,
   components,
@@ -162,14 +165,15 @@ if (packageName === undefined) {
   process.exit(1)
 }
 
-if (githubUsername === undefined) {
-  console.log('\nERROR: Skipped required `githubUsername` option!\n', usage)
+if (packageIdentifier === undefined) {
+  console.log('\nERROR: Skipped required `packageIdentifier` option!\n', usage)
   process.exit(1)
 }
 
 const packageMap = {
   packageName,
   githubUsername,
+  packageIdentifier,
   appName: pascalCase(appName || `${packageName}Example`),
   objcPrefix: objcPrefix
     ? objcPrefix.toUpperCase()
@@ -223,14 +227,13 @@ const copyOptions = (map) => ({
 
 const packagePath = `${process.cwd()}/${packageMap.packageName}`
 const androidSourcesPath = `${packagePath}/android/src/main/kotlin/` +
-  `${packageCase(packageMap.githubUsername)}/${packageCase(packageMap.packageName)}`
+  `${packageIdentifier.replace('.', '/')}`
 const iosSourcesPath = `${packagePath}/ios`
 const typescriptSourcesPath = `${packagePath}/src`
 
 console.log(`\nUsing project template from react-native ${rnVersion}`)
 console.log('\nConfiguration:\n')
 console.log(packageMap)
-console.log()
 
 const copyTemplates = async (src, map, name) => {
   const options = copyOptions(map)
