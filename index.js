@@ -261,12 +261,12 @@ const done = () => {
 const makePackage = async () => {
   await copy(`${__dirname}/template`, packagePath, copyOptions({ ...packageMap, ...miscMap }))
 
-  console.log('mappingComponentMaps: ', componentMaps)
+  console.log('mappingComponentMaps: ', JSON.stringify(componentMaps))
   await Promise.all(componentMaps.map(async (map) => (
     copyTemplates('component-template', map, map.componentName)
   )))
 
-  console.log('mappingmoduleMaps: ', moduleMaps)
+  console.log('mappingmoduleMaps: ', JSON.stringify(moduleMaps))
   await Promise.all(moduleMaps.map(async (map) => (
     copyTemplates('module-template', map, map.moduleName)
   )))
